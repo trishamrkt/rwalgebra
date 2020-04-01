@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Algebraic math library">
+    <meta name="author" content="Patricia Marukot">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+
+    <title>rwalgebra.js</title>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">rwalgebra.js</a>
+      <ul class="navbar-nav mr-auto">
+         <li>
+            <a class="nav-link" href="#demo">Demo</a>
+         </li>
+         <li>
+            <a class="nav-link" href="#api-functions">Functions</a>
+         </li>
+      </ul>
+    </nav>
+
+    <!-- Title + Description -->
+    <main role="main" class="container">
+      <div class="main">
+        <h1 class="display-3">rwalgebra.js</h1>
+        <p class="lead">
+         A math library for parsing, storing, and manipulating algebraic expressions. </br>
+         Supports operations in the real and complex domains. </br>
+        </p>
+      </div>
+    </main>
+
+    <hr>
+
+    <!-- Demo -->
+    <div class="container" id="demo">
+      <div class="row">
+         <div class="col">
+            <h2 class="heading">Demo</h2>
+            <form onsubmit="parseExpression(); return false">
+               <label for="expression">Enter expression string</label>
+               <input class="form-control" id="expression" type="text" placeholder="e.g. x + 5j">
+            </form>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-6 panel">
+             <!-- CARTESIAN AND POLAR NOTATIONS -->
+            <h5 class="sub-heading">Cartesian  & Polar Forms</h5>
+            <p class="text-secondary">
+               Output the cartesian and polar forms of the expression.
+               NOTE: Polar form can only be computed if the expression 
+               does not contain any unknown variables (i.e. only constants).
+            </p>
+            <div class="code-block">
+               <pre id="cartesian-output" class="pre-scrollable"></pre>
+               <pre id="polar-output" class="pre-scrollable"></pre>
+            </div>
+
+            <hr>
+
+            <!-- OPERATIONS FORM -->
+            <h5 class="sub-heading">Operations</h5>
+            <p class="text-secondary">
+               Select an operation and operand to be applied to the expression.
+               The operations directly modify the underlying Expression objects. <br>
+               Changes can be seen in the 'Data Structure' panel.
+            </p>
+            <form class="form-inline" onsubmit="computeOperation(); return false">
+               <div class="row">
+                  <div class="col">
+                     <select id="operator" class="form-control">
+                        <option selected>Choose an operation...</option>
+                        <option value="add">add</option>
+                        <option value="subtract">subtract</option>
+                        <option value="multiply">multiply</option>
+                        <option value="divide">divide</option>
+                     </select>
+                  </div>
+                  <div class="col">
+                     <input class="form-control" id="operand" type="text" placeholder="e.g. x + y">
+                  </div>
+               </div>
+            </form>
+            <div class="code-block">
+               <pre id="operation-output" class="pre-scrollable"></pre>
+            </div>
+
+            <hr>
+
+            <!-- EVALUATION FORM -->
+            <h5 class="sub-heading">Evaluate</h5>
+            <p class="text-secondary">
+               Evaluate the expression given a set of floating point values that will be 
+               substituted into the expression. This does not modify the object itself.
+            </p>
+            <form class="form-inline" onsubmit="evaluateExpression(); return false">
+               <label for="evaluation-variables">Enter variable values (JSON):</label>
+               <input class="form-control" id="evaluation-variables" 
+                  type="text" placeholder="e.g. { 'x': '5' }">
+            </form>
+            <div class="code-block">
+               <pre id="evaluation-output" class="pre-scrollable"></pre>
+            </div>
+         </div>
+         <div id="right-demo-panel" class="col-6 panel">
+            <h5 class="sub-heading">Data Structure</h5>
+            <pre class="pre-scrollable json" id="expression-json"></pre>
+         </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- API -->
+    <div class="container">
+      <h2 class="heading" id="api-functions">Supported Functions</h2>
+
+      <h5 class="sub-heading">Data Structures</h5>
+      <p>
+         RWalgebra.js consists of 2 data structures for algebraic manipulation:
+      </p>
+      <ul class="text-secondary">
+         <li>Expression</li>
+         <li>Equation</li>
+      </ul>
+      <p>
+         The <code>Expression</code> object is used for storing and manipulating 
+         algebraic expressions (i.e. "x + 5j") as shown in the Demo. <br>
+         The <code> Equation</code> object is used to store algebraic equations
+         of the form <code>x + y = 5j - z</code>.
+      </p>
+
+      <h5 class="sub-heading">Supported functionalities</h5>
+      <ul>
+         <li>Parsing</li>
+         <li>
+            Arithmetic operations
+            <ul>
+               <li>add</li>
+               <li>subtract</li>
+               <li>multiply</li>
+               <li>divide</li>
+               <li>inverse</li>
+            </ul>
+         </li>
+         <li>Expression evaluation</li>
+      </ul>
+
+<!--       <h5 class="sub-heading">Constructors</h5>
+      <h4>Equation(arg0, arg1)</h4>
+      <p>Creates an Equation object.</p>
+      <p class="tab text-secondary">
+         <code>arg0:</code> A String or Expression object indicating the LHS of the equation <br>
+         <code>arg1:</code> A String/Expression object indicating the RHS of the equation <br>
+         NOTE: if arg0 and arg1 are undefined, an empty Equation object will be created
+      </p>
+      <pre class="pre-scrollable code-sample">
+Example: let empty_eq = new Equation()
+         let eq = new Equation('x', 'y + 5j')
+      </pre> -->
+    </div>
+
+    <script type="text/javascript" src="./rwalgebra-min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

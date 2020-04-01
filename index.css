@@ -1,0 +1,63 @@
+body {
+	padding-bottom: 1rem;
+}
+pre {
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+
+.tab {
+	margin-left: 1rem;
+}
+
+.main {
+  padding: 8rem 1.5rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.heading {
+	color: darkslateblue;
+}
+
+.code-sample {
+	margin-left: 1rem;
+	display: inline-block;
+	background-color: whitesmoke;
+	border: 1px solid lightgray;
+}
+
+.sub-heading {
+	color: slateblue;
+	margin-top: 1rem;
+	margin-bottom: 0.1rem;
+}
+
+.json {
+	color: black;
+	background-color: whitesmoke;
+	font-size: 0.8em;
+	min-height: 500px;
+	max-height: 500px;
+}
+
+.panel {
+	padding-top: 0.3rem;
+}
+label {
+	padding-right: 0.5rem;
+}
+
+#evaluate-btn {
+	margin-left: 0.5rem;
+}
+
+.code-block {
+	margin-top: 0.5rem;
+	width: 100%;
+	background-color: whitesmoke;
+	border: 1px solid lightgray;
+	padding: 0.2rem;
+}
