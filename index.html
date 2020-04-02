@@ -43,79 +43,102 @@
     <div class="container" id="demo">
       <div class="row">
          <div class="col">
-            <h2 class="heading">Demo</h2>
-            <form onsubmit="parseExpression(); return false">
-               <label for="expression">Enter expression string</label>
-               <input class="form-control" id="expression" type="text" placeholder="e.g. x + 5j">
-            </form>
+            <h2 class="heading">Demo</h2>      
          </div>
       </div>
       <div class="row">
+         <!-- PARSE DEMO -->
          <div class="col-6 panel">
-             <!-- CARTESIAN AND POLAR NOTATIONS -->
-            <h5 class="sub-heading">Cartesian  & Polar Forms</h5>
+            <h5 class="sub-heading">Parsing</h5>
             <p class="text-secondary">
-               Output the cartesian and polar forms of the expression.
-               NOTE: Polar form can only be computed if the expression 
+               Parse a given expression string and output the cartesian and polar forms of the expression. <br>
+               <b>NOTE:</b> Polar form can only be computed if the expression 
                does not contain any unknown variables (i.e. only constants).
             </p>
+            <form onsubmit="parseExpression(); return false">
+               <label for="expression">Enter expression string to be parsed.</label>
+               <input class="form-control" id="expression" type="text" placeholder="e.g. x + 5j">
+            </form>
+             <!-- CARTESIAN AND POLAR NOTATIONS -->
+            <h6 class="subtitle">Cartesian  & Polar Forms</h6>
             <div class="code-block">
                <pre id="cartesian-output" class="pre-scrollable"></pre>
                <pre id="polar-output" class="pre-scrollable"></pre>
             </div>
+         </div>
+         <div class="col-6 panel">
+            <h5 class="sub-heading">Data Structure</h5>
+            <pre class="pre-scrollable json" id="expression-json"></pre>
+         </div>
+      </div>
 
-            <hr>
-
-            <!-- OPERATIONS FORM -->
+         <hr>
+      <div class="row">   
+         <!-- OPERATIONS FORM -->
+         <div class="col-8 panel">
             <h5 class="sub-heading">Operations</h5>
             <p class="text-secondary">
-               Select an operation and operand to be applied to the expression.
-               The operations directly modify the underlying Expression objects. <br>
-               Changes can be seen in the 'Data Structure' panel.
+               Select two operands and an operation to be calculated.
             </p>
             <form class="form-inline" onsubmit="computeOperation(); return false">
                <div class="row">
                   <div class="col">
+                     <input class="form-control" id="operand-1" type="text" placeholder="e.g. x + y">
+                  </div>
+                  <div class="col">
                      <select id="operator" class="form-control">
-                        <option selected>Choose an operation...</option>
-                        <option value="add">add</option>
+                        <option selected value="add">add</option>
                         <option value="subtract">subtract</option>
                         <option value="multiply">multiply</option>
                         <option value="divide">divide</option>
                      </select>
                   </div>
                   <div class="col">
-                     <input class="form-control" id="operand" type="text" placeholder="e.g. x + y">
+                     <input class="form-control" id="operand-2" type="text" placeholder="e.g. x + y">
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary mb-2">Compute</button>
                   </div>
                </div>
             </form>
             <div class="code-block">
                <pre id="operation-output" class="pre-scrollable"></pre>
             </div>
+         </div>
+      </div>
 
-            <hr>
-
-            <!-- EVALUATION FORM -->
+      <hr>
+      <div class="row">   
+         <!-- EVALUATION FORM -->
+         <div class="col panel">
             <h5 class="sub-heading">Evaluate</h5>
             <p class="text-secondary">
                Evaluate the expression given a set of floating point values that will be 
-               substituted into the expression. This does not modify the object itself.
+               substituted into the expression.
             </p>
-            <form class="form-inline" onsubmit="evaluateExpression(); return false">
-               <label for="evaluation-variables">Enter variable values (JSON):</label>
-               <input class="form-control" id="evaluation-variables" 
-                  type="text" placeholder="e.g. { 'x': '5' }">
+            <form onsubmit="evaluateExpression(); return false">
+               <div class="row align-items-end">
+                  <div class="col">
+                     <label for="evaluation-expression">Enter expression to be evaluated</label>
+                     <input class="form-control" id="evaluation-expression" 
+                        type="text" placeholder="e.g. x + y">
+                  </div>
+                  <div class="col">
+                     <label for="evaluation-variables">Enter variable values (JSON):</label>
+                     <input class="form-control" id="evaluation-variables" 
+                        type="text" placeholder="e.g. { 'x': 5, 'y' : 7 } ">
+                  </div>
+                  <div class="col">
+                    <button id="evaluate-btn" type="submit" class="btn btn-primary">Evaluate</button>
+                  </div>
+               </div>               
             </form>
             <div class="code-block">
                <pre id="evaluation-output" class="pre-scrollable"></pre>
             </div>
          </div>
-         <div id="right-demo-panel" class="col-6 panel">
-            <h5 class="sub-heading">Data Structure</h5>
-            <pre class="pre-scrollable json" id="expression-json"></pre>
-         </div>
       </div>
-    </div>
+   </div>
 
     <hr>
 
@@ -137,7 +160,7 @@
          The <code> Equation</code> object is used to store algebraic equations
          of the form <code>x + y = 5j - z</code>.
       </p>
-
+      <br>
       <h5 class="sub-heading">Supported functionalities</h5>
       <ul>
          <li>Parsing</li>
@@ -153,19 +176,6 @@
          </li>
          <li>Expression evaluation</li>
       </ul>
-
-<!--       <h5 class="sub-heading">Constructors</h5>
-      <h4>Equation(arg0, arg1)</h4>
-      <p>Creates an Equation object.</p>
-      <p class="tab text-secondary">
-         <code>arg0:</code> A String or Expression object indicating the LHS of the equation <br>
-         <code>arg1:</code> A String/Expression object indicating the RHS of the equation <br>
-         NOTE: if arg0 and arg1 are undefined, an empty Equation object will be created
-      </p>
-      <pre class="pre-scrollable code-sample">
-Example: let empty_eq = new Equation()
-         let eq = new Equation('x', 'y + 5j')
-      </pre> -->
     </div>
 
     <script type="text/javascript" src="./rwalgebra-min.js"></script>

@@ -31,16 +31,20 @@ p {
 
 .sub-heading {
 	color: slateblue;
-	margin-top: 1rem;
 	margin-bottom: 0.1rem;
+}
+
+.subtitle {
+	color: mediumpurple;
+	margin-top: 1rem;
 }
 
 .json {
 	color: black;
 	background-color: whitesmoke;
 	font-size: 0.8em;
-	min-height: 500px;
-	max-height: 500px;
+	min-height: 260px;
+	max-height: 260px;
 }
 
 .panel {
@@ -51,7 +55,7 @@ label {
 }
 
 #evaluate-btn {
-	margin-left: 0.5rem;
+	margin: 0;
 }
 
 .code-block {

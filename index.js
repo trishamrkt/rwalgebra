@@ -4,62 +4,56 @@ const SUBTRACT = 'subtract';
 const MULTIPLY = 'multiply';
 const DIVIDE = 'divide';
 
-let DEMO_EXPRESSION = null; 
-
-const updateDataStructure = () => {
-	document.getElementById('expression-json').innerText = JSON.stringify(DEMO_EXPRESSION, undefined, 2);
-};
-
-const updateNotations = () => {
-	document.getElementById('cartesian-output').innerText = `Cartesian: ${DEMO_EXPRESSION}`;
-	document.getElementById('polar-output').innerText = `Polar: ${DEMO_EXPRESSION.toPolar()}`;
-}
 
 const parseExpression = () => {
 	const exp_str = document.getElementById('expression').value
-	DEMO_EXPRESSION = new Expression(exp_str);
-	updateDataStructure();
-	updateNotations();
+	let exp = new Expression(exp_str);
+
+	document.getElementById('expression-json').innerText = JSON.stringify(exp, undefined, 2);
+	document.getElementById('cartesian-output').innerText = `Cartesian: ${exp}`;
+	document.getElementById('polar-output').innerText = `Polar: ${exp.toPolar()}`;
 	return false;
 };
 
 const computeOperation = () => {
 	const operator = document.getElementById('operator').value
-	const operand = document.getElementById('operand').value
+	let operand1 = document.getElementById('operand-1').value
+	const operand2 = document.getElementById('operand-2').value
 	
-	if (!operator.length || !operand.length)
-		alert('ERROR: Must select and operator and operand!');
+	if (!operator.length || !operand1.length || !operand2.length)
+		alert('ERROR: Must select and operator and operands!');
 
-	if (DEMO_EXPRESSION === null)
-		alert('ERROR: Please enter an expression string first!');
+	operand1 = new Expression(operand1);
 	
 	switch (operator) {
 		case ADD:
-			DEMO_EXPRESSION.add(operand);
+			operand1.add(operand2);
 			break;
 		case SUBTRACT:
-			DEMO_EXPRESSION.subtract(operand);
+			operand1.subtract(operand2);
 			break;
 		case MULTIPLY:
-			DEMO_EXPRESSION.multiply(operand);
+			operand1.multiply(operand2);
 			break;	
 		case DIVIDE:
-			DEMO_EXPRESSION.divide(operand);
+			operand1.divide(operand2);
 			break;	
 	}
-	updateDataStructure();
-	updateNotations();
-	document.getElementById('operation-output').innerText = `Output: ${DEMO_EXPRESSION}`;
+
+	document.getElementById('operation-output').innerText = `Output: ${operand1}`;
 	return false;
 };
 
 const evaluateExpression = () => {
+	let exp_str = document.getElementById('evaluation-expression').value;
 	let var_str = document.getElementById('evaluation-variables').value;
+
+	let exp = new Expression(exp_str);
 	console.log(`evaluating: ${var_str}`);
 	let variables = {};
 	try {
 			variables = JSON.parse(var_str);
-			let evaluated = DEMO_EXPRESSION.eval(variables);
+			let evaluated = exp.eval(variables);
 			document.getElementById('evaluation-output').innerText = `Output: ${evaluated}`;
 	} catch (ex) {
 		console.log(ex);
